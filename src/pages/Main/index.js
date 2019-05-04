@@ -72,7 +72,29 @@ class Main extends React.Component {
         await localStorage.setItem('@GitCompare:repositories', JSON.stringify(updatedRepositories))
     }
 
-    handleUpdateRepository = () => {}
+    handleUpdateRepository = async (id) => {
+        const { repositories } = this.state
+
+        try {
+            const repository = repositories.find(repo => repo.id === id)
+
+            const { data } = await api.get(`/repos/${repository.full_name}`)
+
+            data.lastCommit = moment(data.pushed_at).fromNow()
+
+            const localRepositories = await this.getLocalRepositories()
+
+            this.setState({
+                repositoryError: false,
+                repositoryInput: '',
+                repositories: repositories.map(repo => (repo.id === data.id ? data : repo)),
+            })
+
+            await localStorage.setItem('@GitCompare:repositories', JSON.stringify(repositories))
+        } catch (err) {
+            this.setState({ repositoryError: true })
+        }
+    }
 
     render() {
         const {
