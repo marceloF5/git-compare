@@ -82,7 +82,7 @@ class Main extends React.Component {
 
             data.lastCommit = moment(data.pushed_at).fromNow()
 
-            const localRepositories = await this.getLocalRepositories()
+            // const localRepositories = await this.getLocalRepositories()
 
             this.setState({
                 repositoryError: false,

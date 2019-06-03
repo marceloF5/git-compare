@@ -50,7 +50,7 @@ export const Repository = styled.div`
                 color: #999;
                 font-style: italic;
             }
-            &:nth-child(2n-1) {
+            &:nth-child(odd) {
                 background: #f5f5f5;
             }
         }
